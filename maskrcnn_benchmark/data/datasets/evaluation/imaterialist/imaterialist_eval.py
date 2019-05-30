@@ -10,7 +10,7 @@ from maskrcnn_benchmark.structures.bounding_box import BoxList
 from maskrcnn_benchmark.structures.boxlist_ops import boxlist_iou
 
 
-def do_coco_evaluation(
+def do_imaterialist_evaluation(
     dataset,
     predictions,
     box_only,
@@ -114,7 +114,7 @@ def prepare_for_coco_segmentation(predictions, dataset, maskiou_on):
         if len(prediction) == 0:
             continue
 
-        img_info = dataset.get_img_info(image_id)
+        img_info = {"width":512, "height":512} # dataset.get_img_info(image_id)
         image_width = img_info["width"]
         image_height = img_info["height"]
         prediction = prediction.resize((image_width, image_height))

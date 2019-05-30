@@ -103,6 +103,14 @@ class DatasetCatalog(object):
         "cityscapes_fine_instanceonly_seg_test_cocostyle": {
             "img_dir": "cityscapes/images",
             "ann_file": "cityscapes/annotations/instancesonly_filtered_gtFine_test.json"
+        },
+        "imaterialist_train":{
+            "img_dir": "imaterialist/train",
+            "ann_file": "imaterialist/annotations/rle_instances_train.json"
+        },
+        "imaterialist_val":{
+            "img_dir": "imaterialist/val",
+            "ann_file": "imaterialist/annotations/resize_rle_instances_val.json"
         }
     }
 
@@ -130,6 +138,17 @@ class DatasetCatalog(object):
                 factory="PascalVOCDataset",
                 args=args,
             )
+        elif "imaterialist" in name:
+            data_dir = DatasetCatalog.DATA_DIR
+            attrs = DatasetCatalog.DATASETS[name]
+            args = dict(
+                root=os.path.join(data_dir, attrs["img_dir"]),
+                ann_file=os.path.join(data_dir, attrs["ann_file"]),
+            )
+            return dict(
+                factory="iMaterialistDataset",
+                args=args,
+            )            
         raise RuntimeError("Dataset not available: {}".format(name))
 
 

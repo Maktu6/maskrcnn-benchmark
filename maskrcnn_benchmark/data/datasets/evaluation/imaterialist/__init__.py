@@ -1,7 +1,7 @@
-from .coco_eval import do_coco_evaluation
+from .imaterialist_eval import do_imaterialist_evaluation
 
 
-def coco_evaluation(
+def imaterialist_evaluation(
     dataset,
     predictions,
     output_folder,
@@ -11,7 +11,7 @@ def coco_evaluation(
     expected_results_sigma_tol,
     maskiou_on=False,
 ):
-    return do_coco_evaluation(
+    return do_imaterialist_evaluation(
         dataset=dataset,
         predictions=predictions,
         box_only=box_only,
