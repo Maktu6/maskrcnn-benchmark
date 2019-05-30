@@ -78,8 +78,12 @@ class ROIMaskHead(torch.nn.Module):
         if self.cfg.MODEL.MASKIOU_ON: 
             if not self.training:
                 result = self.post_processor(mask_logits, proposals)
-                import ipdb; ipdb.set_trace()
-                return x, result, {}, roi_feature, result[0].get_field("mask"), result[0].get_field("labels"), None
+                selected_mask = [r.get_field("mask") for r in result]
+                selected_mask = torch.cat(selected_mask)
+                labels = [r.get_field("labels") for r in result]
+                labels = torch.cat(labels)
+                return x, result, {}, roi_feature, selected_mask, labels, None
+                #result[0].get_field("mask"), result[0].get_field("labels"), None
 
             loss_mask, selected_mask, labels, maskiou_targets = self.loss_evaluator(proposals, mask_logits, targets)
             return x, all_proposals, dict(loss_mask=loss_mask), roi_feature, selected_mask, labels, maskiou_targets
